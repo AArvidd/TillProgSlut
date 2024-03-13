@@ -35163,6 +35163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8477811783349656513}
+  - component: {fileID: 692565128489182306}
   m_Layer: 0
   m_Name: Trea1
   m_TagString: Untagged
@@ -35191,6 +35192,18 @@ Transform:
   - {fileID: 3341659421589841323}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &692565128489182306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017366830548778587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cb0cfdc2b55bf47906d329c75b6e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7202645337289138221
 GameObject:
   m_ObjectHideFlags: 0
