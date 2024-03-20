@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +13,10 @@ public class workerController : MonoBehaviour
     GameObject target;
 
     NavMeshAgent agent;
+
+    float timer = 3;
+
+    int strength = 10;
 
 
     // Start is called before the first frame update
@@ -25,13 +30,18 @@ public class workerController : MonoBehaviour
     {
         if(target == null)
             setTarget();
+        if(Vector3.Distance(target.transform.position, transform.position) < 2 && timer <= 0){
+            attack();
+            timer = 1;
+        }
+        timer -= Time.deltaTime;
+
         agent.destination = target.transform.position;
-        attack();
     }
 
     private void attack(){
-        //todo make atach tree
-
+        treeCotroller script = target.GetComponent<treeCotroller>();
+        script.takeDamage(strength);
     }
     
 
@@ -43,6 +53,7 @@ public class workerController : MonoBehaviour
             Vector3 curent = trees[i].transform.position;
             agent.destination = curent;
             float testLenth = agent.remainingDistance;
+            print(testLenth);
             if(testLenth < shortest){
                 shortest = testLenth;
                 shortestI = i;

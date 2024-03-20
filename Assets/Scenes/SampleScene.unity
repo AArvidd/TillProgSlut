@@ -816,6 +816,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trea1
       objectReference: {fileID: 0}
+    - target: {fileID: 7017366830548778587, guid: 9db806a9f1a17de448151fd97490690f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7079122568468463039, guid: 9db806a9f1a17de448151fd97490690f, type: 3}
       propertyPath: m_Mesh
       value: 
