@@ -51,13 +51,27 @@ public class workerController : MonoBehaviour
         int shortestI = -1;
         for (int i = 0; i < trees.Length; i++){
             Vector3 curent = trees[i].transform.position;
-            agent.destination = curent;
-            float testLenth = agent.remainingDistance;
-            print(testLenth);
+
+            NavMeshPath path = new NavMeshPath();
+            if (!NavMesh.CalculatePath(transform.position, curent, NavMesh.AllAreas, path)){
+                continue;
+            }
+
+            float testLenth = 0;
+            Vector3 point0 = path.corners[0];
+            Vector3 point1;
+
+            for(int j = 1; j < path.corners.Length; j++){
+                point1 = path.corners[j];
+                testLenth += Vector3.Distance(point0, point1);
+                point0 = point1;
+            }
+
             if(testLenth < shortest){
                 shortest = testLenth;
                 shortestI = i;
             }
+
         }
         target = trees[shortestI];
     }
