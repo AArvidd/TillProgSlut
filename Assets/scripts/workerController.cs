@@ -10,9 +10,10 @@ using UnityEngine.AI;
 
 public class workerController : MonoBehaviour
 {
-    Vector3 hand;
+    GameObject hand;
 
     GameObject target;
+    bool holding = false;
 
     NavMeshAgent agent;
 
@@ -20,14 +21,14 @@ public class workerController : MonoBehaviour
 
     int strength = 10;
     
-    string[] tags = {"log", "tree"};
+    string[] tags = {"droppOff", "log", "tree"};
 
     int targetTag = 0; 
 
     // Start is called before the first frame update
     void Start()
     {
-        hand = transform.GetChild(0).position;
+        hand = transform.GetChild(0).gameObject;
         agent = GetComponent<NavMeshAgent>();
 
     }
@@ -37,21 +38,27 @@ public class workerController : MonoBehaviour
     void Update()
     {
         if(target == null){
-            for (int i = 0; i < tags.Length; i++){
+            for (int i = 1; i < tags.Length; i++){
                 if(setTarget(i))
                     break;
             }
         }
 
-
+        
+        if(holding){
+            setTarget(0);
+        }
+        
 
         if(Vector3.Distance(target.transform.position, transform.position) < 2){
-
             switch(targetTag){
                 case 0 :
-                    pickUpp();
-                break;
+                    droppOff();
+                    break;
                 case 1 :
+                    pickUpp();
+                    break;
+                case 2 :
                     if (timer <= 0){
                         attack();
                         timer = 1;
@@ -66,8 +73,18 @@ public class workerController : MonoBehaviour
     }
 
     private void pickUpp(){
-        target.transform.position = hand;
-        
+        holding = true;
+        target.transform.parent = hand.transform;
+        target.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        target.transform.localPosition = Vector3.zero;
+        target.transform.localRotation = Quaternion.Euler(Vector3.zero);
+    }
+
+    private void droppOff(){
+        holding = false;
+        Transform held = transform.GetChild(0).transform.GetChild(0);
+        held.parent = null;
+        held.GetComponent<Rigidbody>(). constraints = RigidbodyConstraints.None;
     }
 
     private void attack(){
