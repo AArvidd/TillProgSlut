@@ -8,6 +8,10 @@ public class interactionController : MonoBehaviour
 
     GameObject lookTarget;
 
+    treeCotroller script;
+
+    int damage = 15;
+
     void Awake()
     {
         cameraObjekt = GetComponentInChildren<Camera>().gameObject;
@@ -20,18 +24,17 @@ public class interactionController : MonoBehaviour
             cameraObjekt.transform.position,
             cameraObjekt.transform.forward,
             out hit,
-            3f
+            5f
         );
 
         lookTarget = hit.collider != null ? hit.collider.gameObject : null;
 
-        //treeCotroller script = lookTarget.transform.parent.GetComponent<treeCotroller>; todo
+        script = lookTarget.transform.parent.GetComponent<treeCotroller>(); 
 
     }
     void OnFire(){
         
-        lookTarget?.SendMessage(
-            "OnInteract",
-            SendMessageOptions.DontRequireReceiver);
+        script?.takeDamage(damage);
+
     }
 }
