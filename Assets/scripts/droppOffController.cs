@@ -15,4 +15,11 @@ public class droppOffController : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "log"){
+            Destroy(other.gameObject);
+        }
+    }
+
 }

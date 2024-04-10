@@ -29,7 +29,7 @@ public class interactionController : MonoBehaviour
 
         lookTarget = hit.collider != null ? hit.collider.gameObject : null;
 
-        script = lookTarget.transform.parent.GetComponent<treeCotroller>(); 
+        script = lookTarget?.transform.parent?.GetComponent<treeCotroller>(); 
 
     }
     void OnFire(){

@@ -14,6 +14,7 @@ public class workerController : MonoBehaviour
 
     GameObject target;
     bool holding = false;
+    bool dropped  = false;
 
     NavMeshAgent agent;
 
@@ -37,6 +38,16 @@ public class workerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(target != null && timer <= 0 && dropped){
+            target = null;
+            dropped = false;
+        }
+
+        if(targetTag == 1 && target.transform.parent != null){
+            target = null;
+        }
+        
         if(target == null){
             for (int i = 1; i < tags.Length; i++){
                 if(setTarget(i))
@@ -85,6 +96,9 @@ public class workerController : MonoBehaviour
         Transform held = transform.GetChild(0).transform.GetChild(0);
         held.parent = null;
         held.GetComponent<Rigidbody>(). constraints = RigidbodyConstraints.None;
+        timer = 1;
+        dropped = true;
+        targetTag = -1;
     }
 
     private void attack(){
@@ -101,6 +115,10 @@ public class workerController : MonoBehaviour
         int shortestI = -1;
         for (int i = 0; i < targets.Length; i++){
             Vector3 curent = targets[i].transform.position;
+
+            if(tag == 1 && targets[i].transform.parent != null){
+                continue;
+            }
 
             NavMeshPath path = new NavMeshPath();
             if (!NavMesh.CalculatePath(transform.position, curent, NavMesh.AllAreas, path)){

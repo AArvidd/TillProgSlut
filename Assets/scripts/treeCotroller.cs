@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -12,6 +13,9 @@ public class treeCotroller : MonoBehaviour
     float timer = 3;
 
     int helth = 100;
+
+    [SerializeField]
+    GameObject log;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +50,7 @@ public class treeCotroller : MonoBehaviour
 
     private void killMe(){
         parent.GetComponent<ForestGenerator>().updateTrees(position);
+        Instantiate(log, transform.position + new Vector3(0, 4.5f, 0), Quaternion.Euler(new Vector3(Random.Range(-5, 5), 0, 90 + Random.Range(-5, 5))));
         Destroy(gameObject);
     }
 
