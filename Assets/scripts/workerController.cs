@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 public class workerController : MonoBehaviour
 {
@@ -43,10 +45,6 @@ public class workerController : MonoBehaviour
             target = null;
             dropped = false;
         }
-
-        if(targetTag == 1 && target.transform.parent != null){
-            target = null;
-        }
         
         if(target == null){
             for (int i = 1; i < tags.Length; i++){
@@ -55,13 +53,23 @@ public class workerController : MonoBehaviour
             }
         }
 
+        if(targetTag == 1 && target?.transform.parent != null){
+            target = null;
+        }
         
         if(holding){
             setTarget(0);
         }
         
+        bool arg;
 
-        if(Vector3.Distance(target.transform.position, transform.position) < 2){
+        {
+            Vector2 targetV2 = new Vector2(target.transform.position.x, target.transform.position.z);
+            Vector2 workerV2 = new Vector2(transform.position.x, transform.position.z);
+            arg = Vector2.Distance(workerV2, targetV2) < 2;
+        } 
+
+        if(arg){
             switch(targetTag){
                 case 0 :
                     droppOff();
@@ -141,6 +149,11 @@ public class workerController : MonoBehaviour
             }
 
         }
+        
+        if(shortestI == -1){
+            return false;
+        }
+
         target = targets[shortestI];
         targetTag = tag;
         return target != null;
