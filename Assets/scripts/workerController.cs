@@ -28,6 +28,8 @@ public class workerController : MonoBehaviour
 
     int targetTag = 0; 
 
+    int value = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -157,6 +159,10 @@ public class workerController : MonoBehaviour
         target = targets[shortestI];
         targetTag = tag;
         return target != null;
+    }
+
+    public int getValue(){
+        return 10;
     }
 
 }

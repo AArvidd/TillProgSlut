@@ -10,6 +10,16 @@ public class SpanerController : MonoBehaviour
 
     int ekon;
 
-    
+    public void add(int value){
+        ekon += value;
+
+        int wirth = worker.GetComponent<workerController>().getValue();
+
+        if (wirth <= ekon){
+            ekon -= value;
+            Instantiate(worker, transform.position, Quaternion.identity);
+        }
+
+    }
 
 }

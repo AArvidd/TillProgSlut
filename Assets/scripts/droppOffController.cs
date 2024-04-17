@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class droppOffController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    GameObject spawner;
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "log"){
+            spawner.GetComponent<SpanerController>().add(other.gameObject.GetComponent<LogData>().value);
             Destroy(other.gameObject);
         }
     }
